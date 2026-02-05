@@ -9,6 +9,7 @@ interface BounceButtonProps {
     mascotSticker?: string;
     variant?: 'primary' | 'secondary';
     className?: string;
+    type?: 'button' | 'submit' | 'reset';
 }
 
 export function BounceButton({
@@ -16,7 +17,8 @@ export function BounceButton({
     onClick,
     mascotSticker,
     variant = 'primary',
-    className = ''
+    className = '',
+    type = 'button',
 }: BounceButtonProps) {
     const primaryStyle = {
         background: 'linear-gradient(120deg, #FFD700, #FFF1B8, #B8860B)',
@@ -47,6 +49,7 @@ export function BounceButton({
                 }
             }}
             onClick={onClick}
+            type={type}
             style={variant === 'primary' ? primaryStyle : secondaryStyle}
             className={`
         relative px-8 py-4 font-bold text-lg

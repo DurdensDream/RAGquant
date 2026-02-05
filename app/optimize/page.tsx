@@ -137,8 +137,8 @@ export default function OptimizePage() {
                         {/* Submit Button */}
                         <div className="flex justify-center">
                             <BounceButton
-                                onClick={() => { }}
                                 className={loading ? 'opacity-70 cursor-wait' : ''}
+                                type="submit"
                             >
                                 {loading ? 'Optimizing Vault Strategy...' : 'Generate Strategy'}
                             </BounceButton>
@@ -229,10 +229,13 @@ export default function OptimizePage() {
 
                             {/* Generate Another Button */}
                             <div className="mt-8 text-center">
-                                <BounceButton onClick={() => {
-                                    setResult(null);
-                                    setQuery('');
-                                }}>
+                                <BounceButton
+                                    onClick={() => {
+                                        setResult(null);
+                                        setQuery('');
+                                    }}
+                                    type="button"
+                                >
                                     Generate Another Strategy
                                 </BounceButton>
                             </div>
@@ -250,6 +253,7 @@ export default function OptimizePage() {
                     <BounceButton
                         variant="secondary"
                         onClick={() => window.location.href = '/'}
+                        type="button"
                     >
                         ← Back to Vault Lobby
                     </BounceButton>

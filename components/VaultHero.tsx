@@ -4,6 +4,14 @@ import { motion } from 'framer-motion';
 import { BounceButton } from './ui/BounceButton';
 
 export function VaultHero() {
+    const tickerItems = [
+        { text: 'Market Pulse' },
+        { text: 'Sharpe 1.52 ▲', className: 'text-emerald-profit' },
+        { text: 'VaR 4.8%' },
+        { text: 'Momentum +2.1%', className: 'text-emerald-profit' },
+        { text: 'Drawdown -1.4%', className: 'text-ruby-loss' },
+    ];
+
     return (
         <section className="relative min-h-screen overflow-hidden bg-vault-gradient text-ivory">
             <div className="absolute inset-0 opacity-30 bg-ticker-pattern" />
@@ -26,7 +34,7 @@ export function VaultHero() {
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.2 }}
                 >
-                    Money Maestro&#39;s Trading Strategy Optimizer
+                    Money Maestro&apos;s Trading Strategy Optimizer
                 </motion.p>
 
                 <motion.p
@@ -45,7 +53,7 @@ export function VaultHero() {
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.5 }}
                 >
-                    <BounceButton onClick={() => window.location.href = '/optimize'}>
+                    <BounceButton onClick={() => window.location.href = '/optimize'} type="button">
                         Enter the Strategy Vault
                     </BounceButton>
                 </motion.div>
@@ -96,20 +104,15 @@ export function VaultHero() {
             </div>
 
             <div className="ticker-strip absolute bottom-0 left-0 flex w-[200%] items-center gap-12 py-3 text-xs uppercase tracking-[0.3em] text-ivory/70">
-                <div className="flex w-1/2 animate-ticker items-center gap-12">
-                    <span>Market Pulse</span>
-                    <span className="text-emerald-profit">Sharpe 1.52 ▲</span>
-                    <span>VaR 4.8%</span>
-                    <span className="text-emerald-profit">Momentum +2.1%</span>
-                    <span className="text-ruby-loss">Drawdown -1.4%</span>
-                </div>
-                <div className="flex w-1/2 animate-ticker items-center gap-12">
-                    <span>Market Pulse</span>
-                    <span className="text-emerald-profit">Sharpe 1.52 ▲</span>
-                    <span>VaR 4.8%</span>
-                    <span className="text-emerald-profit">Momentum +2.1%</span>
-                    <span className="text-ruby-loss">Drawdown -1.4%</span>
-                </div>
+                {[0, 1].map((group) => (
+                    <div key={group} className="flex w-1/2 animate-ticker items-center gap-12">
+                        {tickerItems.map((item, index) => (
+                            <span key={`${group}-${item.text}-${index}`} className={item.className}>
+                                {item.text}
+                            </span>
+                        ))}
+                    </div>
+                ))}
             </div>
         </section>
     );
