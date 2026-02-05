@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { HeartParticles } from '@/components/ui/HeartParticles';
+import { CoinParticles } from '@/components/ui/CoinParticles';
 import { BounceButton } from '@/components/ui/BounceButton';
 
 interface StrategyResult {
@@ -19,10 +19,10 @@ export default function OptimizePage() {
     const [error, setError] = useState('');
 
     const exampleStrategies = [
-        "Find me a momentum trading strategy for tech stocks 📈",
-        "Optimize a portfolio for maximum Sharpe ratio with minimal risk 💎",
-        "Create a mean reversion strategy for swing trading ✨",
-        "Suggest a dividend growth strategy for long-term gains 💰"
+        "Optimize a momentum strategy for NASDAQ leaders with volatility filters",
+        "Build a low-risk portfolio targeting a Sharpe ratio above 1.3",
+        "Design a mean reversion playbook with VaR constraints",
+        "Suggest a dividend growth strategy with downside protection"
     ];
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -48,18 +48,17 @@ export default function OptimizePage() {
 
             const data = await response.json();
             setResult(data);
-        } catch (err: any) {
-            setError(err.message || 'Something went wrong, babe! 💔');
+        } catch (err: unknown) {
+            const message = err instanceof Error ? err.message : 'Strategy generation failed. Please try again.';
+            setError(message);
         } finally {
             setLoading(false);
         }
     };
 
     return (
-        <main className="relative min-h-screen" style={{
-            background: 'linear-gradient(to bottom, #FFC0CB, #FFE4E1, #FFFFFF)'
-        }}>
-            <HeartParticles />
+        <main className="relative min-h-screen text-ivory">
+            <CoinParticles />
 
             <div className="relative z-10 container mx-auto px-4 py-12">
                 {/* Header */}
@@ -68,14 +67,11 @@ export default function OptimizePage() {
                     animate={{ opacity: 1, y: 0 }}
                     className="text-center mb-12"
                 >
-                    <h1
-                        className="text-5xl md:text-7xl mb-4 glitter-text"
-                        style={{ fontFamily: 'Pacifico, cursive', color: '#FF69B4' }}
-                    >
-                        ✨ Strategy Optimizer ✨
+                    <h1 className="text-4xl md:text-6xl mb-4 glitter-text">
+                        Strategy Optimizer
                     </h1>
-                    <p className="text-xl text-pink-600 italic">
-                        Tell me what trading strategy you want, babe! 💕
+                    <p className="text-lg text-ivory/70">
+                        Describe your market objective and let QuantOver craft a refined strategy.
                     </p>
                 </motion.div>
 
@@ -84,19 +80,17 @@ export default function OptimizePage() {
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.2 }}
-                    className="max-w-3xl mx-auto bg-white/80 backdrop-blur-sm shadow-2xl p-8 md:p-12"
-                    style={{ borderRadius: '24px', border: '4px solid #FF69B4' }}
+                    className="max-w-3xl mx-auto vault-panel rounded-3xl border border-vault-gold/40 p-8 md:p-12"
                 >
-                    {/* Floating mascot decoration */}
                     <motion.div
-                        className="absolute -right-16 top-0 text-7xl hidden md:block"
+                        className="absolute -right-12 top-2 text-6xl hidden md:block"
                         animate={{
-                            y: [0, -15, 0],
-                            rotate: [0, 5, -5, 0]
+                            y: [0, -12, 0],
+                            rotate: [0, 6, -6, 0]
                         }}
-                        transition={{ repeat: Infinity, duration: 4 }}
+                        transition={{ repeat: Infinity, duration: 4.5 }}
                     >
-                        💖
+                        🪙
                     </motion.div>
 
                     <form onSubmit={handleSubmit}>
@@ -104,23 +98,16 @@ export default function OptimizePage() {
                         <div className="mb-6">
                             <label
                                 htmlFor="strategy-query"
-                                className="block text-lg font-bold mb-3"
-                                style={{ color: '#FF69B4' }}
+                                className="block text-lg font-semibold mb-3 text-vault-gold"
                             >
-                                What strategy are you dreaming of? 💭
+                                What strategy should we refine?
                             </label>
                             <textarea
                                 id="strategy-query"
                                 value={query}
                                 onChange={(e) => setQuery(e.target.value)}
-                                placeholder="Example: Create a momentum trading strategy for FAANG stocks with backtesting..."
-                                className="w-full px-6 py-4 border-2 text-gray-800 focus:outline-none focus:ring-4 transition-all"
-                                style={{
-                                    borderColor: '#FFC0CB',
-                                    borderRadius: '16px',
-                                    backgroundColor: '#FFFAF0',
-                                    boxShadow: loading ? '0 0 20px rgba(255, 105, 180, 0.3)' : 'none'
-                                }}
+                                placeholder="Example: Create a momentum trading strategy for FAANG stocks with VaR limits..."
+                                className="w-full rounded-2xl border border-vault-gold/40 bg-midnight/60 px-6 py-4 text-ivory placeholder:text-ivory/40 focus:outline-none focus:ring-2 focus:ring-vault-gold/60 transition-all"
                                 rows={6}
                                 disabled={loading}
                             />
@@ -128,8 +115,8 @@ export default function OptimizePage() {
 
                         {/* Example Suggestions */}
                         <div className="mb-8">
-                            <p className="text-sm text-gray-600 mb-3 italic">
-                                ✨ Need inspiration? Try these cute examples:
+                            <p className="text-sm text-ivory/60 mb-3">
+                                Suggested prompts:
                             </p>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                                 {exampleStrategies.map((example, idx) => (
@@ -139,13 +126,7 @@ export default function OptimizePage() {
                                         whileHover={{ scale: 1.03 }}
                                         whileTap={{ scale: 0.97 }}
                                         onClick={() => setQuery(example)}
-                                        className="text-left px-4 py-3 text-sm border-2 transition-all"
-                                        style={{
-                                            borderColor: '#FFB6C1',
-                                            borderRadius: '12px',
-                                            backgroundColor: '#FFF5F7',
-                                            color: '#FF69B4'
-                                        }}
+                                        className="text-left px-4 py-3 text-sm border border-vault-gold/30 rounded-xl bg-slate-ink/60 text-ivory/80 transition-all hover:border-vault-gold"
                                     >
                                         {example}
                                     </motion.button>
@@ -159,7 +140,7 @@ export default function OptimizePage() {
                                 onClick={() => { }}
                                 className={loading ? 'opacity-70 cursor-wait' : ''}
                             >
-                                {loading ? '✨ Optimizing... ✨' : 'Generate Strategy! 💖'}
+                                {loading ? 'Optimizing Vault Strategy...' : 'Generate Strategy'}
                             </BounceButton>
                         </div>
                     </form>
@@ -171,16 +152,11 @@ export default function OptimizePage() {
                                 initial={{ opacity: 0, y: -10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0 }}
-                                className="mt-6 p-4 border-2 text-center"
-                                style={{
-                                    borderColor: '#FFB6D9',
-                                    borderRadius: '12px',
-                                    backgroundColor: '#FFF0F5'
-                                }}
+                                className="mt-6 rounded-xl border border-ruby-loss/60 bg-slate-ink/70 p-4 text-center"
                             >
-                                <p className="text-red-500">❌ {error}</p>
-                                <p className="text-xs text-gray-600 mt-2">
-                                    Make sure the Python backend is running on port 8001!
+                                <p className="text-ruby-loss">⚠️ {error}</p>
+                                <p className="text-xs text-ivory/60 mt-2">
+                                    Ensure the Python backend is running on port 8001.
                                 </p>
                             </motion.div>
                         )}
@@ -195,60 +171,40 @@ export default function OptimizePage() {
                             animate={{ opacity: 1, scale: 1 }}
                             exit={{ opacity: 0 }}
                             transition={{ delay: 0.2 }}
-                            className="max-w-4xl mx-auto mt-8 bg-white/90 backdrop-blur-sm shadow-2xl p-8 md:p-12"
-                            style={{ borderRadius: '24px', border: '4px solid #FFD700' }}
+                            className="max-w-4xl mx-auto mt-8 vault-panel rounded-3xl border border-vault-gold/40 p-8 md:p-12"
                         >
-                            <h2
-                                className="text-3xl md:text-4xl mb-6 text-center glitter-text"
-                                style={{ fontFamily: 'Pacifico, cursive', color: '#FF69B4' }}
-                            >
-                                💖 Your Custom Strategy! 💖
+                            <h2 className="text-3xl md:text-4xl mb-6 text-center glitter-text">
+                                Vault Strategy Brief
                             </h2>
 
                             {/* Strategy Description */}
-                            <div className="mb-6 p-6" style={{
-                                borderRadius: '16px',
-                                backgroundColor: '#FFF5F7',
-                                border: '2px solid #FFB6C1'
-                            }}>
-                                <h3 className="text-xl font-bold mb-3" style={{ color: '#FF69B4' }}>
-                                    📊 Strategy Overview
+                            <div className="mb-6 rounded-2xl border border-vault-gold/30 bg-slate-ink/60 p-6">
+                                <h3 className="text-xl font-semibold mb-3 text-vault-gold">
+                                    Strategy Overview
                                 </h3>
-                                <p className="text-gray-700 whitespace-pre-wrap">{result.strategy}</p>
+                                <p className="text-ivory/80 whitespace-pre-wrap">{result.strategy}</p>
                             </div>
 
                             {/* Risk Analysis */}
-                            <div className="mb-6 p-6" style={{
-                                borderRadius: '16px',
-                                backgroundColor: '#FFFAF0',
-                                border: '2px solid #FFB6C1'
-                            }}>
-                                <h3 className="text-xl font-bold mb-3" style={{ color: '#FF69B4' }}>
-                                    ⚠️ Risk Analysis
+                            <div className="mb-6 rounded-2xl border border-ruby-loss/60 bg-midnight/70 p-6">
+                                <h3 className="text-xl font-semibold mb-3 text-ruby-loss">
+                                    Risk Analysis
                                 </h3>
-                                <p className="text-gray-700">{result.risk_analysis}</p>
+                                <p className="text-ivory/80">{result.risk_analysis}</p>
                             </div>
 
                             {/* Expected Returns */}
-                            <div className="mb-6 p-6" style={{
-                                borderRadius: '16px',
-                                backgroundColor: '#F0FFF4',
-                                border: '2px solid #98FB98'
-                            }}>
-                                <h3 className="text-xl font-bold mb-3" style={{ color: '#FF69B4' }}>
-                                    💰 Expected Returns
+                            <div className="mb-6 rounded-2xl border border-emerald-profit/70 bg-slate-ink/50 p-6">
+                                <h3 className="text-xl font-semibold mb-3 text-emerald-profit">
+                                    Expected Returns
                                 </h3>
-                                <p className="text-gray-700">{result.expected_return}</p>
+                                <p className="text-ivory/80">{result.expected_return}</p>
                             </div>
 
                             {/* Implementation Steps */}
-                            <div className="p-6" style={{
-                                borderRadius: '16px',
-                                backgroundColor: '#F0F9FF',
-                                border: '2px solid #BFDBFE'
-                            }}>
-                                <h3 className="text-xl font-bold mb-4" style={{ color: '#FF69B4' }}>
-                                    📝 Implementation Steps
+                            <div className="rounded-2xl border border-vault-gold/20 bg-midnight/60 p-6">
+                                <h3 className="text-xl font-semibold mb-4 text-vault-gold">
+                                    Implementation Steps
                                 </h3>
                                 <ol className="space-y-3">
                                     {result.implementation_steps.map((step, idx) => (
@@ -261,11 +217,11 @@ export default function OptimizePage() {
                                         >
                                             <span
                                                 className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center mr-3 font-bold text-white"
-                                                style={{ backgroundColor: '#FF69B4' }}
+                                                style={{ backgroundColor: '#B8860B' }}
                                             >
                                                 {idx + 1}
                                             </span>
-                                            <span className="text-gray-700 pt-1">{step}</span>
+                                            <span className="text-ivory/80 pt-1">{step}</span>
                                         </motion.li>
                                     ))}
                                 </ol>
@@ -277,7 +233,7 @@ export default function OptimizePage() {
                                     setResult(null);
                                     setQuery('');
                                 }}>
-                                    Generate Another Strategy! ✨
+                                    Generate Another Strategy
                                 </BounceButton>
                             </div>
                         </motion.div>
@@ -295,7 +251,7 @@ export default function OptimizePage() {
                         variant="secondary"
                         onClick={() => window.location.href = '/'}
                     >
-                        ← Back to Home
+                        ← Back to Vault Lobby
                     </BounceButton>
                 </motion.div>
             </div>

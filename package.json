@@ -9,8 +9,10 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@fontsource/cinzel": "^5.2.8",
     "@fontsource/inter": "^5.2.8",
     "@fontsource/pacifico": "^5.2.7",
+    "@fontsource/playfair-display": "^5.2.8",
     "@fontsource/poppins": "^5.2.7",
     "chart.js": "^4.5.1",
     "framer-motion": "^12.29.2",

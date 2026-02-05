@@ -1,11 +1,11 @@
-import { HeartParticles } from '@/components/ui/HeartParticles';
-import { PinkHero } from '@/components/PinkHero';
+import { CoinParticles } from '@/components/ui/CoinParticles';
+import { VaultHero } from '@/components/VaultHero';
 
 export default function Home() {
   return (
     <main className="relative">
-      <HeartParticles />
-      <PinkHero />
+      <CoinParticles />
+      <VaultHero />
     </main>
   );
 }

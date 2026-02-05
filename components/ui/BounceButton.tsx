@@ -19,15 +19,16 @@ export function BounceButton({
     className = ''
 }: BounceButtonProps) {
     const primaryStyle = {
-        background: 'linear-gradient(to right, #FF69B4, #FFC0CB)',
-        color: 'white',
+        background: 'linear-gradient(120deg, #FFD700, #FFF1B8, #B8860B)',
+        color: '#0B0F19',
+        border: '1px solid rgba(255, 215, 0, 0.8)',
         borderRadius: '24px'
     };
 
     const secondaryStyle = {
-        background: 'white',
-        color: '#FF69B4',
-        border: '2px solid #FF69B4',
+        background: 'rgba(11, 15, 25, 0.7)',
+        color: '#FFD700',
+        border: '1px solid rgba(255, 215, 0, 0.6)',
         borderRadius: '24px'
     };
 
@@ -56,7 +57,7 @@ export function BounceButton({
             {/* Sparkle effect on hover */}
             <motion.div
                 className="absolute inset-0 opacity-0"
-                style={{ background: '#FFD700' }}
+                style={{ background: 'rgba(255, 215, 0, 0.35)' }}
                 whileHover={{ opacity: 0.3 }}
             />
 
