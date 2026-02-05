@@ -63,19 +63,22 @@ type SettingItem = {
 
 const sanitizeLabel = (value: string) =>
   value
+    .replace(/[\r\n\t]/g, ' ')
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/\"/g, '&quot;')
-    .replace(/'/g, '&#39;');
+    .replace(/'/g, '&#39;')
+    .replace(/[\u0000-\u001f\u007f]/g, '');
 
 const createStickerUri = (label: string, color: string) => {
   const safeLabel = sanitizeLabel(label);
+  const safeColor = /^#(?:[0-9a-fA-F]{3}){1,2}$/.test(color) ? color : palette.babyPink;
   const svg = `
     <svg xmlns="http://www.w3.org/2000/svg" width="360" height="480">
       <defs>
         <linearGradient id="grad" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="${color}" />
+          <stop offset="0%" stop-color="${safeColor}" />
           <stop offset="100%" stop-color="#FFF7FB" />
         </linearGradient>
       </defs>
