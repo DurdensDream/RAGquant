@@ -47,6 +47,25 @@ Open [http://localhost:3000](http://localhost:3000) to access the application.
 
 ---
 
+## Mobile App (SFW Pinkpilled UI)
+
+The `/mobile` directory contains a standalone Expo React Native frontend with a playful, SFW pink aesthetic and sticker placeholders.
+
+```bash
+cd mobile
+npm install
+npm run start
+# or launch a specific target:
+npm run web
+npm run android
+npm run ios
+```
+
+> Sticker placeholders use `placehold.co` images. Swap them with royalty-free SFW anime sticker assets or generate your own with prompts like:
+> “curvy anime girl in friendly pose, entirely SFW and cute, with exaggerated hourglass figure, big eyes, and modest clothing.”
+
+---
+
 ## Project Structure
 
 ```
