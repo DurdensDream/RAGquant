@@ -1,42 +1,35 @@
-# ✨ QuantOver: Your Adorable AI Trading Bestie 💖
+# RAGquant
 
-> **RAG-powered quantitative finance platform with the cutest pink bimbo theme!**
+> **RAG-powered quantitative finance platform for trading strategy optimization**
 
-A production-ready, enterprise-grade trading strategy optimizer that combines serious AI (RAG, ML models, portfolio optimization) with an ultra-feminine, playful pink aesthetic featuring anime-style mascots and sparkle effects.
-
----
-
-## 🎀 Features
-
-### Ultra-Feminine UI
-- 💕 **Pink Gradient Theme**: Hot pink (#FF69B4) + baby pink (#FFC0CB) color palette
-- ✨ **Floating Hearts Animation**: Canvas-based particle system
-- 🎪 **Bounce Physics**: Jiggle effects on all interactive elements
-- 🌸 **Pacifico Fonts**: Bubbly, cursive headings
-- 💖 **Anime Mascots**: Cute character stickers throughout (to be generated)
-
-### Enterprise Finance Backend
-- 🤖 **RAG System**: Retrieval-Augmented Generation with Pinecone + Neo4j
-- 📊 **Portfolio Optimization**: Markowitz with Ledoit-Wolf shrinkage
-- 📈 **ML Predictions**: TensorFlow LSTM for price forecasting
-- ⚠️ **Risk Metrics**: VaR/CVaR calculation via Monte Carlo
-- 🔄 **Real-Time Streaming**: Apache Kafka + WebSocket market data
-- 🧪 **Backtesting**: Sharpe, Sortino, Calmar ratio analysis
+A production-ready trading strategy optimizer combining Retrieval-Augmented Generation (RAG), machine learning models, and portfolio optimization techniques.
 
 ---
 
-## 🚀 Quick Start
+## Features
+
+### Core Capabilities
+- **RAG System**: Hybrid retrieval with Pinecone vector database + Neo4j graph database
+- **Portfolio Optimization**: Markowitz mean-variance optimization with Ledoit-Wolf shrinkage
+- **ML Predictions**: LSTM neural networks for price forecasting
+- **Risk Metrics**: Value-at-Risk (VaR) and Conditional VaR via Monte Carlo simulation
+- **Real-Time Streaming**: Apache Kafka + WebSocket for live market data
+- **Backtesting Engine**: Performance analysis with Sharpe, Sortino, and Calmar ratios
+
+---
+
+## Quick Start
 
 ### Prerequisites
-- Node.js 18+ and npm
-- Python 3.10+ (for microservices)
+- Node.js 18+
+- Python 3.10+
 - Docker & Kubernetes (for deployment)
 
 ### Installation
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/quantover.git
+git clone https://github.com/DurdensDream/RAGquant.git
 cd RAGquant
 
 # Install dependencies
@@ -50,112 +43,42 @@ cp .env.example .env.local
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to see the pink magic! ✨
+Open [http://localhost:3000](http://localhost:3000) to access the application.
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 RAGquant/
 ├── app/
-│   ├── page.tsx              # Pink hero landing page
-│   ├── layout.tsx            # Root layout with metadata
-│   ├── globals.css           # Pink theme styles
-│   ├── /optimize            # Strategy optimizer page (TODO)
-│   ├── /dashboard           # Charts & metrics (TODO)
-│   └── /upload              # Document ingestion (TODO)
+│   ├── page.tsx              # Landing page
+│   ├── layout.tsx            # Root layout
+│   ├── globals.css           # Global styles
+│   ├── /optimize             # Strategy optimizer
+│   ├── /dashboard            # Analytics dashboard
+│   └── /upload               # Document ingestion
 ├── components/
-│   ├── /ui/
-│   │   ├── BounceButton.tsx  # Jiggle-animated buttons
-│   │   └── HeartParticles.tsx # Floating hearts canvas
-│   ├── PinkHero.tsx          # Hero section with animations
-│   └── ChartWithMascot.tsx   # Financial charts (TODO)
-├── lib/                      # Business logic (TODO)
-│   ├── ragPipeline.ts        # Hybrid RAG orchestration
-│   ├── backtest.ts           # Quant analysis
-│   └── portfolioOptimizer.ts # Markowitz optimization
-├── microservices/            # Python backend (TODO)
+│   ├── /ui/                  # Reusable UI components
+│   └── ChartComponent.tsx    # Financial charts
+├── lib/
+│   ├── ragPipeline.ts        # RAG orchestration
+│   ├── backtest.ts           # Quantitative analysis
+│   └── portfolioOptimizer.ts # Optimization algorithms
+├── backend/
+│   └── main.py               # FastAPI backend service
+├── microservices/
 │   ├── /rag-service          # Data ingestion + retrieval
 │   ├── /ml-service           # LSTM predictions
 │   └── /streaming-service    # Kafka producer
-├── public/
-│   ├── /anime-stickers/      # Character assets (TODO)
-│   └── /patterns/            # Lace SVG patterns
-├── tailwind.config.ts        # Custom pink palette
-└── .env.local                # API keys (HuggingFace configured)
+└── .env.local                # Environment configuration
 ```
 
 ---
 
-## 🎨 Theme Customization
+## Environment Variables
 
-### Color Palette
-```css
---hot-pink: #FF69B4;       /* Primary buttons, headings */
---baby-pink: #FFC0CB;      /* Backgrounds, soft accents */
---soft-pink: #FFB6C1;      /* Secondary elements */
---pastel-pink: #FFE4E1;    /* Subtle backgrounds */
---gold-glitter: #FFD700;   /* Sparkle effects */
---profit-green: #98FB98;   /* Gains (pastel green) */
---loss-red: #FFB6D9;       /* Losses (pink-tinted red) */
-```
-
-### Fonts
-- **Headings**: Pacifico (bubbly cursive)
-- **Body**: Inter (clean sans-serif)
-- **Financial Data**: Poppins (modern)
-
----
-
-## 🛠️ Development Roadmap
-
-### ✅ Phase 1-2: Foundation & Pink Theme (COMPLETE)
-- [x] Next.js 14 + TypeScript setup
-- [x] Pink color palette & fonts
-- [x] BounceButton + HeartParticles components
-- [x] Pink gradient hero page
-
-### 🔨 Phase 3: Backend Infrastructure (IN PROGRESS)
-- [ ] MongoDB Atlas connection
-- [ ] Pinecone vector database
-- [ ] Neo4j graph database
-- [ ] API Gateway with JWT auth
-
-### 📝 Phase 4-6: RAG & ML
-- [ ] PDF/CSV ingestion pipeline
-- [ ] FinBERT embeddings
-- [ ] LangChain orchestration
-- [ ] LSTM price prediction
-- [ ] Portfolio optimization (Ledoit-Wolf)
-
-### 🎭 Phase 7: Anime Assets
-- [ ] Generate 10-15 character stickers (Stable Diffusion)
-  - Winking girl, blowing kiss, hands on hips, celebrating, etc.
-- [ ] Integrate mascots into buttons, charts, modals
-
-### 📊 Phase 8-10: UI Pages
-- [ ] Strategy optimizer page (`/optimize`)
-- [ ] Dashboard with real-time charts
-- [ ] Upload page with drag-drop
-- [ ] Auth pages (login/signup with mascots)
-
-### 🔐 Phase 11-12: Security & Testing
-- [ ] JWT authentication
-- [ ] Input sanitization (Zod)
-- [ ] Jest unit tests (80%+ coverage)
-- [ ] Cypress E2E tests
-
-### 🚢 Phase 13-14: Deployment
-- [ ] Docker containerization
-- [ ] Kubernetes manifests
-- [ ] CI/CD pipeline (GitHub Actions)
-
----
-
-## 🎯 Environment Variables
-
-Required in `.env.local`:
+Create a `.env.local` file with the following:
 
 ```bash
 # Core API Keys
@@ -177,17 +100,14 @@ NEXTAUTH_SECRET=<random-secret>
 
 ---
 
-## 📚 Tech Stack
+## Tech Stack
 
 | Layer | Technology | Purpose |
 |-------|-----------|---------|
 | Framework | Next.js 14 (App Router) | Server-side rendering, API routes |
-| Styling | Tailwind CSS | Utility-first pink theme |
-| Animation | Framer Motion | Bounce effects, smooth transitions |
-| Charts | Chart.js + react-chartjs-2 | Financial visualizations |
-| Fonts | Google Fonts (Pacifico, Inter, Poppins) | Typography |
+| Styling | Tailwind CSS | Utility-first styling |
 | Backend | Python FastAPI | Microservices for RAG/ML |
-| RAG | LangChain + Pinecone + Neo4j | Hybrid retrieval |
+| RAG | LangChain + Pinecone + Neo4j | Hybrid retrieval system |
 | ML | TensorFlow, scikit-learn | LSTM predictions, optimization |
 | Streaming | Apache Kafka + Socket.io | Real-time market data |
 | Database | MongoDB, Neo4j, Redis | Polyglot persistence |
@@ -195,29 +115,46 @@ NEXTAUTH_SECRET=<random-secret>
 
 ---
 
-## 🎀 Asset Generation Guide
+## Development Roadmap
 
-### Anime Character Stickers
+### Phase 1-2: Foundation (Complete)
+- [x] Next.js 14 + TypeScript setup
+- [x] UI component library
+- [x] API route structure
 
-Use **Stable Diffusion** or **Midjourney** with these prompts:
+### Phase 3: Backend Infrastructure (In Progress)
+- [ ] MongoDB Atlas integration
+- [ ] Pinecone vector database setup
+- [ ] Neo4j graph database configuration
+- [ ] API Gateway with JWT authentication
 
-1. **Winking Girl**: "cute anime girl with curves, winking, pink crop top, mini skirt, white background, kawaii style, SFW"
-2. **Blowing Kiss**: "anime girl blowing kiss, pouty lips, pink outfit, hearts around, pastel colors, cute pose, SFW"
-3. **Hands on Hips**: "curvy anime girl hands on hips, confident pose, hot pink dress, thigh-high socks, flirty smile"
-4. **Celebrating**: "anime girl jumping with joy, sparkles, pink outfit, happy expression, kawaii"
-5. **Pouting**: "sad anime girl pouting, puppy eyes, pink tears, adorable expression"
-6. **Thinking**: "anime girl finger on chin, thinking pose, question marks, pink outfit"
-7. **Dancing**: "anime girl dancing, twirling, pink dress flowing, happy smile, hearts"
-8-15. *(More poses in implementation_plan.md)*
+### Phase 4-6: RAG & ML Pipeline
+- [ ] PDF/CSV document ingestion
+- [ ] FinBERT embeddings
+- [ ] LangChain orchestration
+- [ ] LSTM price prediction models
+- [ ] Portfolio optimization (Ledoit-Wolf)
 
-**Post-process**:
-- Remove background (remove.bg)
-- Resize to 512x512px
-- Save as PNG in `/public/anime-stickers/`
+### Phase 7-10: Frontend Features
+- [ ] Strategy optimizer interface
+- [ ] Real-time analytics dashboard
+- [ ] Document upload interface
+- [ ] User authentication flow
+
+### Phase 11-12: Security & Testing
+- [ ] JWT authentication
+- [ ] Input validation (Zod)
+- [ ] Unit tests (Jest, 80%+ coverage)
+- [ ] E2E tests (Cypress)
+
+### Phase 13-14: Deployment
+- [ ] Docker containerization
+- [ ] Kubernetes manifests
+- [ ] CI/CD pipeline (GitHub Actions)
 
 ---
 
-## 🧪 Testing
+## Testing
 
 ```bash
 # Unit tests
@@ -226,46 +163,30 @@ npm test
 # E2E tests
 npx cypress run
 
-# Backend tests (Python)
-cd microservices/rag-service
+# Backend tests
+cd backend
 pytest tests/
 ```
 
 ---
 
-## ⚠️ Disclaimer
+## Disclaimer
 
-> 💕 **For simulation & education only!** 💕  
-> This tool is **NOT** financial advice. Always consult a certified financial advisor before making real trading decisions. The pink theme is empowering and playful, not professional investment guidance!
-
----
-
-## 📄 License
-
-MIT License - feel free to fork and make it even cuter! ✨
+> **For simulation and educational purposes only.**
+> This tool does not constitute financial advice. Consult a certified financial advisor before making trading decisions.
 
 ---
 
-## 🤝 Contributing
+## License
 
-Contributions welcome! Please:
-1. Fork the repo
-2. Create a feature branch (`git checkout -b feature/more-sparkles`)
-3. Commit changes (`git commit -m "Add more pink gradients"`)
-4. Push to branch (`git push origin feature/more-sparkles`)
+MIT License
+
+---
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/your-feature`)
+3. Commit changes (`git commit -m "Add your feature"`)
+4. Push to branch (`git push origin feature/your-feature`)
 5. Open a Pull Request
-
----
-
-## 💖 Credits
-
-Created with love by [@yourusername](https://github.com/yourusername)
-
-Special thanks to:
-- The anime community for inspiration 💕
-- Quantitative finance for the backend rigor 📈
-- Everyone who believes finance can be fun AND cute! ✨
-
----
-
-**Made with 💖 and lots of pink pixels!**
