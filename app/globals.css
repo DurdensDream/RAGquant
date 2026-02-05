@@ -1,0 +1,63 @@
+@import '@fontsource/pacifico';
+@import '@fontsource/inter';
+@import '@fontsource/poppins';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  color: #374151;
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(to bottom, #FFC0CB, #FFE4E1, #FFFFFF);
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3 {
+  font-family: 'Pacifico', cursive;
+}
+
+/* Sparkle effect */
+@keyframes sparkle {
+
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.5;
+    transform: scale(1.2);
+  }
+}
+
+.sparkle {
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+/* Glitter text */
+@keyframes shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.glitter-text {
+  background: linear-gradient(135deg, #FF69B4, #FFD700, #FFC0CB);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 3s ease-in-out infinite;
+}
