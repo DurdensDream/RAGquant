@@ -17,12 +17,58 @@ export default function OptimizePage() {
     const [loading, setLoading] = useState(false);
     const [result, setResult] = useState<StrategyResult | null>(null);
     const [error, setError] = useState('');
+    const [ingestLoading, setIngestLoading] = useState(false);
+    const [ingestMessage, setIngestMessage] = useState('');
+    const [ingestError, setIngestError] = useState('');
 
     const exampleStrategies = [
         "Optimize a momentum strategy for NASDAQ leaders with volatility filters",
         "Build a low-risk portfolio targeting a Sharpe ratio above 1.3",
         "Design a mean reversion playbook with VaR constraints",
         "Suggest a dividend growth strategy with downside protection"
+    ];
+
+    const sampleDocs = [
+        {
+            title: 'Quant Risk Primer',
+            content: 'Overview of VaR, CVaR, and drawdown controls for portfolio risk management.'
+        },
+        {
+            title: 'Momentum Signals Guide',
+            content: 'Use 12-1 month momentum, moving average crossovers, and volatility filters for trend capture.'
+        },
+        {
+            title: 'Mean Reversion Notes',
+            content: 'Entry when z-score deviates beyond 2, exit near mean with tight stop-loss rules.'
+        },
+        {
+            title: 'Position Sizing Rules',
+            content: 'Risk 1% of capital per trade with ATR-based stops and volatility scaling.'
+        },
+        {
+            title: 'Options Hedging Sheet',
+            content: 'Protect downside using put spreads and delta hedges during high IV regimes.'
+        },
+        {
+            title: 'Macro Indicators',
+            content: 'Track PMI, yield curve slope, and inflation surprises to adjust risk-on exposure.'
+        },
+        {
+            title: 'Factor Rotation Playbook',
+            content: 'Rotate between value, quality, and momentum factors based on regime signals.'
+        },
+        {
+            title: 'Liquidity Checklist',
+            content: 'Ensure average daily volume supports trade sizing without adverse impact.'
+        },
+        {
+            title: 'Backtesting Checklist',
+            content: 'Use walk-forward validation, realistic slippage, and out-of-sample periods.'
+        },
+        {
+            title: 'Execution Notes',
+            content: 'Use limit orders near VWAP and avoid trades during major economic releases.'
+        }
     ];
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -53,6 +99,34 @@ export default function OptimizePage() {
             setError(message);
         } finally {
             setLoading(false);
+        }
+    };
+
+    const handleIngest = async () => {
+        setIngestLoading(true);
+        setIngestMessage('');
+        setIngestError('');
+
+        try {
+            const response = await fetch('/api/ingest', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ documents: sampleDocs })
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to ingest documents');
+            }
+
+            const data = await response.json();
+            setIngestMessage(`Ingested ${data.ingested} documents. Total indexed: ${data.total}.`);
+        } catch (err: unknown) {
+            const message = err instanceof Error ? err.message : 'Document ingestion failed. Please try again.';
+            setIngestError(message);
+        } finally {
+            setIngestLoading(false);
         }
     };
 
@@ -132,6 +206,29 @@ export default function OptimizePage() {
                                     </motion.button>
                                 ))}
                             </div>
+                        </div>
+
+                        <div className="mb-8 rounded-2xl border border-vault-gold/30 bg-slate-ink/50 p-5">
+                            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                                <div>
+                                    <p className="text-sm text-ivory/70">Need context? One-click ingest 10 quant docs.</p>
+                                    <p className="text-xs text-ivory/50">Improves responses by adding lightweight RAG context.</p>
+                                </div>
+                                <BounceButton
+                                    type="button"
+                                    onClick={handleIngest}
+                                    className={ingestLoading ? 'opacity-70 cursor-wait' : ''}
+                                >
+                                    {ingestLoading ? 'Ingesting Docs...' : 'One-click ingest 10 docs'}
+                                </BounceButton>
+                            </div>
+
+                            {ingestMessage && (
+                                <p className="mt-3 text-xs text-emerald-profit">✅ {ingestMessage}</p>
+                            )}
+                            {ingestError && (
+                                <p className="mt-3 text-xs text-ruby-loss">⚠️ {ingestError}</p>
+                            )}
                         </div>
 
                         {/* Submit Button */}

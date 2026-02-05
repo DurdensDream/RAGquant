@@ -28,6 +28,21 @@
 # misc
 .DS_Store
 *.pem
+*.log
+
+# python
+__pycache__/
+*.py[cod]
+.Python
+*.sqlite3
+
+# virtual environments
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
 
 # debug
 npm-debug.log*

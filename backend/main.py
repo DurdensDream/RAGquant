@@ -1,14 +1,21 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import Optional
 import os
 from dotenv import load_dotenv
 from huggingface_hub import InferenceClient
+import re
+import uuid
 
 load_dotenv()
 
 app = FastAPI(title="QuantOver RAG Service")
+
+@app.on_event("startup")
+async def startup_state():
+    if not hasattr(app.state, "documents"):
+        app.state.documents = []
 
 # Enable CORS for Next.js frontend
 app.add_middleware(
@@ -19,11 +26,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Initialize HuggingFace client
+# Initialize HuggingFace client lazily
 HF_API_KEY = os.getenv("HUGGINGFACE_API_KEY")
-if not HF_API_KEY:
-    raise ValueError("HUGGINGFACE_API_KEY environment variable is required")
-client = InferenceClient(token=HF_API_KEY)
+client: Optional[InferenceClient] = None
 
 class StrategyRequest(BaseModel):
     query: str
@@ -36,14 +41,80 @@ class StrategyResponse(BaseModel):
     expected_return: str
     implementation_steps: list[str]
 
+class IngestDocument(BaseModel):
+    id: Optional[str] = None
+    title: Optional[str] = None
+    content: str = Field(..., min_length=1)
+    source: Optional[str] = None
+    tags: Optional[list[str]] = None
+
+class IngestRequest(BaseModel):
+    documents: list[IngestDocument]
+
+class IngestResponse(BaseModel):
+    ingested: int
+    total: int
+
+def _tokenize(text: str) -> set[str]:
+    return set(re.findall(r"[a-zA-Z0-9']+", text.lower()))
+
+def _rank_documents(query: str, documents: list[dict], top_k: int = 3) -> list[dict]:
+    if not documents:
+        return []
+
+    query_tokens = _tokenize(query)
+    if not query_tokens:
+        return documents[:top_k]
+
+    scored = []
+    for doc in documents:
+        content = doc.get("content", "")
+        tokens = _tokenize(content)
+        score = len(query_tokens.intersection(tokens))
+        scored.append((score, doc))
+
+    scored.sort(key=lambda item: item[0], reverse=True)
+    return [doc for score, doc in scored if score > 0][:top_k] or [doc for _, doc in scored][:top_k]
+
 @app.get("/")
 async def root():
     return {
         "service": "QuantOver RAG Backend",
         "status": "running",
         "version": "1.0.0",
-        "cute_factor": "💖"
+        "cute_factor": "💖",
+        "documents_indexed": len(getattr(app.state, "documents", []))
     }
+
+@app.get("/ingest")
+async def ingest_status():
+    documents = getattr(app.state, "documents", [])
+    return {
+        "documents_indexed": len(documents)
+    }
+
+@app.post("/ingest", response_model=IngestResponse)
+async def ingest_documents(request: IngestRequest):
+    if not request.documents:
+        raise HTTPException(status_code=400, detail="No documents provided for ingestion")
+
+    documents = getattr(app.state, "documents", [])
+
+    ingested = 0
+    for doc in request.documents:
+        doc_id = doc.id or str(uuid.uuid4())
+        documents.append({
+            "id": doc_id,
+            "title": doc.title,
+            "content": doc.content,
+            "source": doc.source,
+            "tags": doc.tags or []
+        })
+        ingested += 1
+
+    app.state.documents = documents
+
+    return IngestResponse(ingested=ingested, total=len(documents))
 
 @app.post("/analyze", response_model=StrategyResponse)
 async def analyze_strategy(request: StrategyRequest):
@@ -51,6 +122,16 @@ async def analyze_strategy(request: StrategyRequest):
     Generate a trading strategy using HuggingFace LLM with RAG
     """
     try:
+        if not HF_API_KEY:
+            raise HTTPException(
+                status_code=500,
+                detail="HUGGINGFACE_API_KEY environment variable is required"
+            )
+
+        global client
+        if client is None:
+            client = InferenceClient(token=HF_API_KEY)
+
         # Create enhanced prompt with financial context
         system_prompt = """You are a quantitative finance expert AI that generates detailed trading strategies.
         
@@ -62,6 +143,14 @@ Given a user query, provide:
 
 Be specific, use financial terminology, and include backtesting recommendations.
 Format your response clearly with sections."""
+
+        documents = getattr(app.state, "documents", [])
+        top_docs = _rank_documents(request.query, documents, top_k=3)
+        context_block = ""
+        if top_docs:
+            context_block = "\n\nContext documents:\n" + "\n".join(
+                f"- {doc.get('title') or doc.get('id')}: {doc.get('content')}" for doc in top_docs
+            )
 
         user_prompt = f"""Query: {request.query}
 
@@ -75,6 +164,7 @@ Generate a detailed trading strategy that addresses this query. Include:
 - Position sizing recommendations
 - Risk management (stop-loss, take-profit)
 - Backtesting approach
+{context_block}
 """
 
         # Call HuggingFace Inference API (using Mixtral or similar)
@@ -154,7 +244,12 @@ Generate a detailed trading strategy that addresses this query. Include:
 
 @app.get("/health")
 async def health_check():
-    return {"status": "healthy", "message": "Backend is adorably functional! 💕"}
+    documents = getattr(app.state, "documents", [])
+    return {
+        "status": "healthy",
+        "message": "Backend is adorably functional! 💕",
+        "documents_indexed": len(documents)
+    }
 
 if __name__ == "__main__":
     import uvicorn
