@@ -9,25 +9,25 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Pink Bimbo Theme Palette
-        'hot-pink': '#FF69B4',
-        'baby-pink': '#FFC0CB',
-        'soft-pink': '#FFB6C1',
-        'pastel-pink': '#FFE4E1',
-        'gold-glitter': '#FFD700',
-        'white-cream': '#FFFAF0',
-        'profit-green': '#98FB98',
-        'loss-red': '#FFB6D9',
+        'vault-gold': '#FFD700',
+        'vault-bronze': '#B8860B',
+        'emerald-profit': '#19C37D',
+        'ruby-loss': '#E74C3C',
+        'midnight': '#0B0F19',
+        'slate-ink': '#1F2937',
+        'ivory': '#F9F6EF',
+        'ticker-green': '#16A34A',
+        'ticker-red': '#DC2626',
       },
       fontFamily: {
-        pacifico: ['Pacifico', 'cursive'],
+        cinzel: ['"Cinzel"', 'serif'],
+        playfair: ['"Playfair Display"', 'serif'],
         inter: ['Inter', 'sans-serif'],
-        poppins: ['Poppins', 'sans-serif'],
       },
       backgroundImage: {
-        'rosy-gradient': 'linear-gradient(135deg, #FFB6C1, #FFC0CB, #FFE4E1)',
-        'shimmer-overlay': 'radial-gradient(circle, rgba(255,215,0,0.3), transparent)',
-        'lace-pattern': "url('/patterns/lace-subtle.svg')",
+        'vault-gradient': 'linear-gradient(135deg, #0B0F19 0%, #1F2937 45%, #B8860B 100%)',
+        'gold-shine': 'linear-gradient(120deg, rgba(255,215,0,0.6), rgba(184,134,11,0.3), rgba(255,215,0,0.6))',
+        'ticker-pattern': "repeating-linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.06) 2px, transparent 2px, transparent 6px)",
       },
       borderRadius: {
         'extra': '24px',
@@ -35,6 +35,7 @@ const config: Config = {
       animation: {
         'bounce-slow': 'bounce 3s infinite',
         'pulse-glow': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'ticker': 'ticker 14s linear infinite',
       },
     },
   },
