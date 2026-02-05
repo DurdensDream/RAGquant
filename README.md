@@ -62,7 +62,7 @@ npm run ios
 ```
 
 > Sticker placeholders use generated SVG data URIs. Swap them with royalty-free SFW anime sticker assets or generate your own with prompts like:
-> “curvy anime girl in friendly pose, entirely SFW and cute, with exaggerated hourglass figure, big eyes, and modest clothing.”
+> “friendly anime character in a cheerful pose, entirely SFW and cute, with big eyes and modest clothing.”
 
 ---
 

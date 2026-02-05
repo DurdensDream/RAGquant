@@ -61,7 +61,16 @@ type SettingItem = {
   tooltip: string;
 };
 
+const sanitizeLabel = (value: string) =>
+  value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/\"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+
 const createStickerUri = (label: string, color: string) => {
+  const safeLabel = sanitizeLabel(label);
   const svg = `
     <svg xmlns="http://www.w3.org/2000/svg" width="360" height="480">
       <defs>
@@ -72,7 +81,7 @@ const createStickerUri = (label: string, color: string) => {
       </defs>
       <rect width="360" height="480" fill="url(#grad)" rx="28" />
       <text x="50%" y="45%" text-anchor="middle" font-size="28" fill="#5A3D5C" font-family="Arial">
-        ${label}
+        ${safeLabel}
       </text>
       <text x="50%" y="58%" text-anchor="middle" font-size="20" fill="#FF69B4" font-family="Arial">
         Sticker Placeholder
@@ -95,6 +104,13 @@ const createPatternUri = () => {
     </svg>
   `;
   return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
+};
+
+const FALLBACK_STICKER: Sticker = {
+  id: 'sticker-fallback',
+  name: 'Cheerful Placeholder',
+  uri: createStickerUri('Cheerful', '#FFE4F0'),
+  prompt: 'Fallback sticker placeholder.',
 };
 
 // Placeholder sticker data. Swap each URI with royalty-free SFW anime sticker art or generate using the prompt text.
@@ -172,6 +188,8 @@ const STICKERS: Sticker[] = [
     prompt: 'Curvy anime girl twirling in pastel dress, SFW and joyful',
   },
 ];
+
+const DEFAULT_STICKER = STICKERS[0] ?? FALLBACK_STICKER;
 
 const HOME_CARDS: HomeCard[] = [
   {
@@ -344,7 +362,7 @@ const SparkleBurst = ({ visible }: { visible: boolean }) => {
 };
 
 const StickerCard = ({ card }: { card: HomeCard }) => {
-  const sticker = STICKERS.find((item) => item.id === card.stickerId) ?? STICKERS[0];
+  const sticker = STICKERS.find((item) => item.id === card.stickerId) ?? DEFAULT_STICKER;
   return (
     <View style={styles.card}>
       <View style={styles.cardBadge}>
@@ -399,7 +417,7 @@ export default function App() {
     Poppins_600SemiBold,
   });
   const [activeTab, setActiveTab] = useState<TabKey>('home');
-  const [selectedSticker, setSelectedSticker] = useState(STICKERS[0]);
+  const [selectedSticker, setSelectedSticker] = useState(DEFAULT_STICKER);
   const [showModal, setShowModal] = useState(false);
   const [showCheer, setShowCheer] = useState(false);
   const [tooltipId, setTooltipId] = useState<string | null>(null);
@@ -409,13 +427,12 @@ export default function App() {
       const timer = setTimeout(() => setShowCheer(false), 1200);
       return () => clearTimeout(timer);
     }
-    return undefined;
   }, [showCheer]);
 
   const profileStickers = useMemo(() => STICKERS.slice(0, 8), []);
 
   if (!fontsLoaded) {
-    return <LoadingScreen sticker={STICKERS[2]} />;
+    return <LoadingScreen sticker={STICKERS[2] ?? DEFAULT_STICKER} />;
   }
 
   return (
