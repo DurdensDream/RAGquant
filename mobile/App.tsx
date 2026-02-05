@@ -464,7 +464,7 @@ export default function App() {
                 <SparkleButton
                   label="Open Cheerful Modal"
                   onPress={() => setShowModal(true)}
-                  sticker={STICKERS[5]}
+                  sticker={STICKERS[5] ?? DEFAULT_STICKER}
                 />
                 <View style={styles.homeMessageBox}>
                   <Text style={styles.homeMessageTitle}>Sparkle Spotlight</Text>
@@ -546,9 +546,9 @@ export default function App() {
 
           <View style={styles.bottomNav}>
             {[
-              { key: 'home', label: 'Home', sticker: STICKERS[0] },
-              { key: 'profile', label: 'Profile', sticker: STICKERS[1] },
-              { key: 'settings', label: 'Settings', sticker: STICKERS[2] },
+              { key: 'home', label: 'Home', sticker: STICKERS[0] ?? DEFAULT_STICKER },
+              { key: 'profile', label: 'Profile', sticker: STICKERS[1] ?? DEFAULT_STICKER },
+              { key: 'settings', label: 'Settings', sticker: STICKERS[2] ?? DEFAULT_STICKER },
             ].map((tab) => (
               <Pressable key={tab.key} onPress={() => setActiveTab(tab.key as TabKey)}>
                 <View style={styles.navItem}>
@@ -576,9 +576,9 @@ export default function App() {
         <View style={styles.modalOverlay}>
           <Animated.View style={styles.modalCard}>
             <Image
-              source={{ uri: STICKERS[3].uri }}
+              source={{ uri: (STICKERS[3] ?? DEFAULT_STICKER).uri }}
               style={styles.modalSticker}
-              accessibilityLabel={STICKERS[3].name}
+              accessibilityLabel={(STICKERS[3] ?? DEFAULT_STICKER).name}
             />
             <Text style={styles.modalTitle}>Cheerful Spin!</Text>
             <Text style={styles.modalText}>
@@ -587,7 +587,7 @@ export default function App() {
             <SparkleButton
               label="Close"
               onPress={() => setShowModal(false)}
-              sticker={STICKERS[6]}
+              sticker={STICKERS[6] ?? DEFAULT_STICKER}
             />
           </Animated.View>
         </View>
